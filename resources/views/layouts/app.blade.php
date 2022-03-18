@@ -18,6 +18,7 @@
     <link href="C:\Users\Computer\Desktop\Php\css\formcontact.css"  rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/formcontact.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

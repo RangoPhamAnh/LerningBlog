@@ -4,13 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Blog</title>
-        
-        <link href="/css/formcontact.css" rel ="stylesheet">
+        <title>Blog</title> 
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+        <link href="{{ asset('css/formcontact.css') }}" rel="stylesheet">
         <!-- Styles -->
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <!-- Boostrap -->
         <style>
             html, body {
                 background-color: #fff;
@@ -69,6 +71,8 @@
         </style>
     </head>
     <body>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -90,19 +94,19 @@
                 </div>
                 <div class="form">
                     <form action="" id="form1">
-                    <input type="text" id="fname" name="fname" placeholder="Họ tên"><br>
-                    <input type="text" id="femail" name="femail" placeholder="Địa chỉ Email"><br>
-                    <input type="text" id="fcontent" name="fcontent" placeholder="Nội dung yêu cầu"><br>
-                    <input type="submit" value="Gửi thông tin">
+                    <input type="text" id="fname" name="fname" placeholder="Name"><br>
+                    <input type="text" id="femail" name="femail" placeholder="Email address"><br>
+                    <input type="text" id="fcontent" name="fcontent" placeholder="Type your message here..."><br>
+                    <input type="submit" value="Submit">
                     </form>
                 </div>
-            
             </div>
             <div class="top-left">
                 <div class="links">
+                    <a><big>Laravel</big></a>
+                    <a href="/">Home</a>  
                     <a href="/contact">Contact</a>
                     <a href="/about">About</a>
-                    <input type="text" placeholder="Search..">
                 </div>
             </div>
         </div>

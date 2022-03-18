@@ -6,11 +6,12 @@
 
         <title>Blog</title>
         
-        
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <!-- Boostrap -->
         <style>
             html, body {
                 background-color: #fff;
@@ -69,6 +70,8 @@
         </style>
     </head>
     <body>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -88,10 +91,12 @@
                 <div class="title m-b-md">
                     Pham Anh
                 </div>
+                <p>My Email: phamngocanh771999@outlook.com</p>
             </div>
             <div class="top-left">
                 <div class="links">
-                    <a href="/home">Home</a>
+                    <a><big>Laravel</big></a>
+                    <a href="/">Home</a> 
                     <a href="/contact">Contact</a>
                     <a href="/about">About</a>
                 </div>
