@@ -1,5 +1,7 @@
 @extends('main')
 
+@section('title1' , '| Contact')
+
 @section('frontend')
             <div class="content">
                 <div class="title m-b-md">
@@ -15,3 +17,5 @@
                 </div>
             </div>
 @endsection
+
+@section('scripts')

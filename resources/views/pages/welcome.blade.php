@@ -1,5 +1,7 @@
 @extends('main')
 
+@section('title1' ,  '| Homepage')
+
 @section('frontend')
                     <div class="row">
                         <div class="col-md-12">
