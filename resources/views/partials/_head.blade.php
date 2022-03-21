@@ -61,8 +61,9 @@
                 text-decoration: none;
                 text-transform: uppercase;
             }
-
-
+            .content2 > h1{
+                text-align: center;
+            }
             .m-b-md {
                 margin-bottom: 30px;
             }
