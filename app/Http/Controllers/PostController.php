@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        // tạo biến và lưu trữ của tất cả các bolg từ database
+        $posts = Post::all();
+
+        // trả về một chế độ xem và chuyển vào biến trên
+        return view('posts.index') -> withPosts($posts);
     }
 
     /**
@@ -34,7 +41,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this -> Validate($request,array(
+                'title' =>  'required|max:255',
+                'body'  =>  'required'
+        ));
+
+        $post = new Post;
+
+        $post -> title = $request->title;
+        $post -> body = $request->body;
+
+        $request->session()->flash('success', 'The blog post was successfully save!');
+
+        $post -> save();
+        return redirect() -> route('posts.show', $post -> id);
+
     }
 
     /**
@@ -45,7 +66,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::Find($id);
+        return view('posts.show') -> withPost($post);
     }
 
     /**
@@ -56,7 +78,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Tìm kiếm
+        $post = Post::find($id);
+        // Xem
+        return view('posts.edit')->withPost($post);
     }
 
     /**
@@ -68,7 +93,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
