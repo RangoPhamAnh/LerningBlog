@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use Dotenv\Result\Success;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         // tạo biến và lưu trữ của tất cả các bolg từ database
-        $posts = Post::all();
+        $posts = Post::orderBy('id','desc')->paginate(5);
 
         // trả về một chế độ xem và chuyển vào biến trên
         return view('posts.index') -> withPosts($posts);
@@ -43,12 +44,14 @@ class PostController extends Controller
     {
         $this -> Validate($request,array(
                 'title' =>  'required|max:255',
+                'slug'  =>  'required|alpha_dash|min:5|max:255|unique:posts,slug',
                 'body'  =>  'required'
         ));
 
         $post = new Post;
 
         $post -> title = $request->title;
+        $post -> slug = $request ->slug;
         $post -> body = $request->body;
 
         $request->session()->flash('success', 'The blog post was successfully save!');
@@ -93,7 +96,23 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,array(
+            'title'=> 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'body' => 'required'
+        ));
+        //Lưu vào database
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body =$request ->input('slug');
+        $post->body =$request->input('body');
+
+        $post->save();
+        //Cài đặt lưu nhanh
+        $request->session()->flash('success', 'The blog post was successfully save!');
         
+        //lưu nhanh đến post show
+        return redirect()->route('posts.show' , $post->id);
     }
 
     /**
@@ -102,8 +121,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $post = POST::find($id);
+        $post -> delete();
+
+        $request->session()->flash('success', 'The blog post was successfully delete!');
+
+        return redirect()->route('posts.index');
     }
 }
