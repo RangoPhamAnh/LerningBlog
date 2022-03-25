@@ -2,6 +2,12 @@
 
 @section('title', '| Edit Blog Post')
 
+@section('stylesheet')
+
+    {!! Html::style('css/select2.min.css') !!}
+
+@endsection
+
 @section('frontend')
 
 {!! Form::model($post, ['route' => ['posts.update', $post->id] , 'method' => 'Put']) !!}
@@ -14,6 +20,9 @@
             
             {{ Form::label('slug','Slug:',['class'=> 'form-spacing-top'] )}}
             {{ Form::text('slug', null, ['class'=> 'form-control ']) }}
+
+            {{ Form::label('category_id', "Category:",['class' => 'form-spacing-top'])}}
+            {{ Form::select('category_id',$categories,null,['class'=>'form-control']) }}
 
             {{ Form::label('body',"Body:", ['class' => 'form-spacing-top']) }}
             {{ Form::textarea('body', null, ['class' => 'form-control'])}}
@@ -45,3 +54,9 @@
 {!! Form::close() !!}
 
 @stop
+
+@section('scripts')
+
+    {!! Html::script('js/select2.min.js') !!}
+
+@endsection

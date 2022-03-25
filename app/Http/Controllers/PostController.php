@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use Dotenv\Result\Success;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -31,7 +33,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.create')->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -42,9 +46,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this -> Validate($request,array(
                 'title' =>  'required|max:255',
                 'slug'  =>  'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'category_id' => 'required|integer',
                 'body'  =>  'required'
         ));
 
@@ -52,11 +58,15 @@ class PostController extends Controller
 
         $post -> title = $request->title;
         $post -> slug = $request ->slug;
+        $post -> category_id = $request->category_id;
         $post -> body = $request->body;
+
+
+        $post -> save();
+        $post -> tags()->sync($request->tags, false);
 
         $request->session()->flash('success', 'The blog post was successfully save!');
 
-        $post -> save();
         return redirect() -> route('posts.show', $post -> id);
 
     }
@@ -69,7 +79,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::Find($id);
+        $post = Post::find($id);
         return view('posts.show') -> withPost($post);
     }
 
@@ -83,8 +93,13 @@ class PostController extends Controller
     {
         // Tìm kiếm
         $post = Post::find($id);
+        $categories = Category::all();
+        $cats = array();
+        foreach  ($categories as $category){
+            $cats[$category->id] = $category -> name;
+        }
         // Xem
-        return view('posts.edit')->withPost($post);
+        return view('posts.edit')->withPost($post)->withCategories($cats);
     }
 
     /**
@@ -100,6 +115,7 @@ class PostController extends Controller
         if($request->input('slug') == $post->slug ){
             $this->validate($request, array(
                 'title' => 'required|max:255',
+                'category_id' => 'required|integer',
                 'body' => 'required'
             ));
         }else{
@@ -107,13 +123,15 @@ class PostController extends Controller
         $this->validate($request,array(
             'title'=> 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'category_id' => 'required|integer',
             'body' => 'required'
         ));
         }
         //Lưu vào database
         $post = Post::find($id);
         $post->title = $request->input('title');
-        $post->body =$request ->input('slug');
+        $post->slug =$request ->input('slug');
+        $post->category_id = $request->input('category_id');
         $post->body =$request->input('body');
 
         $post->save();
