@@ -98,8 +98,14 @@ class PostController extends Controller
         foreach  ($categories as $category){
             $cats[$category->id] = $category -> name;
         }
+
+        $tags = Tag::all();
+        $tags2 = array();
+        foreach ($tags as $tag){
+            $tags2[$tag->id] = $tag->name;
+        }
         // Xem
-        return view('posts.edit')->withPost($post)->withCategories($cats);
+        return view('posts.edit')->withPost($post)->withCategories($cats)->withTags($tags2);
     }
 
     /**
@@ -117,7 +123,7 @@ class PostController extends Controller
                 'title' => 'required|max:255',
                 'category_id' => 'required|integer',
                 'body' => 'required'
-            ));
+            )); 
         }else{
 
         $this->validate($request,array(
@@ -129,12 +135,18 @@ class PostController extends Controller
         }
         //Lưu vào database
         $post = Post::find($id);
+
         $post->title = $request->input('title');
         $post->slug =$request ->input('slug');
         $post->category_id = $request->input('category_id');
         $post->body =$request->input('body');
 
         $post->save();
+        if(isset($request->tags)){
+            $post->tags()->sync($request->tags, true);
+        }else{
+            $post->tags()->sync(array());
+        }
         //Cài đặt lưu nhanh
         $request->session()->flash('success', 'The blog post was successfully save!');
         
@@ -151,6 +163,8 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = POST::find($id);
+        $post -> tags()->detach();
+
         $post -> delete();
 
         $request->session()->flash('success', 'The blog post was successfully delete!');

@@ -2,6 +2,7 @@
 
 @section('title',' | View Post')
 
+
 @section('frontend')
     <div class="row">
         <div class="col-md-8">
@@ -10,9 +11,9 @@
 
             <hr>
 
-            <div class="tags">
+            <div>
                 @foreach($post->tags as $tag)
-                    <span class="label label-default">{{ $tag->name }}</span>
+                    <span class="badge badge-secondary">{{ $tag->name }}</span>
                 @endforeach
             </div>
         </div>
