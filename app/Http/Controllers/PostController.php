@@ -9,7 +9,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use App\Tag;
-use Faker\Provider\Image;
+use Image;
 
 
 
